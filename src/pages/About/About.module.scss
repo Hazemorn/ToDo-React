@@ -1,0 +1,14 @@
+@use '../../styles/mixins.scss' as *;
+.about {
+    margin-top: 20px;
+    @include flex-hybrid(space-between, none);
+    flex-direction: column;
+    @include showCard;
+    :not(li) {
+        padding: 15px 0;
+    }
+    li {
+        list-style-type: disc;
+    }
+
+}

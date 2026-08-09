@@ -1,0 +1,60 @@
+@use '../../styles/mixins.scss' as *;
+
+.header {
+    @include flex-hybrid(space-between, center);
+    padding: 20px clamp(20px, 5vw, 50px);
+    background-color: var(--bkgdHeader);
+    border-radius: 25px;
+    &__links {
+        width: 100%;
+        max-width: 60%;
+        @include flex-hybrid(space-around, center);
+        a{
+            &:global(.active) {
+                padding-bottom: 5px;
+                border-bottom: 1px solid var(--title);
+            }
+        }
+    }
+    &__burger {
+        cursor: pointer;
+        display: none;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .header {
+        &__burger {
+            display: block;
+        }
+        &__desktop {
+            display: none;
+        }
+    }
+    .mobile {
+        &__links { 
+            @include flex-dir(column);
+            @include flex-hybrid(space-around,center);
+            height: 70%;
+        }
+        &_popup_menu {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background-color: var(--background); 
+            z-index: 10;
+            padding: 40px 24px;
+            
+            .close {
+                position: absolute;
+                top: 24px;
+                right: 24px;
+                width: 24px;
+                height: 24px;
+                cursor: pointer;
+            }
+        }  
+    }
+}

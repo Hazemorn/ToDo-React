@@ -1,0 +1,10 @@
+.root {
+    display: grid;
+    place-items: center;
+    height: 80vh;
+}
+.text {
+    h2, h4 {
+        line-height: 100px;
+    }
+}

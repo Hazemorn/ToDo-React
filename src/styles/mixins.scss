@@ -1,0 +1,22 @@
+@mixin flex-hybrid ($jc, $ai) {
+    display: flex;
+    justify-content: $jc;
+    align-items: $ai;
+}
+
+@mixin flex-dir ($dir) {
+    display: flex;
+    flex-direction: $dir;
+}
+
+@keyframes show {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@mixin showCard {
+    animation-name: show;
+    animation-fill-mode: both;
+    animation-timing-function: ease-out;
+     animation-duration: 0.8s;
+}
