@@ -1,47 +1,57 @@
-import Button from "../../components/Button/Button";
-import Skeleton from "../../components/Skeleton/Skeleton";
+import { useCallback, useState } from "react";
 import s from "./Home.module.scss";
 
+import FilterApp from "../../components/FilterApp/FilterApp";
+//import Skeleton from "../../components/Skeleton/Skeleton";
+import CreateTask from "../../components/CreateTask/CreateTask";
+import Card from "../../components/Card/Card";
+import type { ITask } from "../../store/types/types";
+
 const Home = () => {
+  const handleAddTask = useCallback((newTask: ITask) => {
+    setTasks((prev) => [...prev, newTask]);
+  }, []);
+
+  const [tasks, setTasks] = useState<ITask[]>(() => {
+    const saved = localStorage.getItem("tasks");
+    return saved ? JSON.parse(saved) : [];
+  });
+  const count = tasks.length;
+  const isEmpty = tasks.length === 0;
+
   return (
     <>
-      <section className={s.new_task}>
-        <div className={s.new_task__container}>
-          <form id="form">
-            <input
-              className={`${s.new_task__title} ${s.border}`}
-              type="text"
-              id="taskTitle"
-              placeholder="Enter task title*"
-              maxLength={50}
-              required
-            />
-            <div className={s.priority__container}>
-              <select name="priority--add" id="priority--add">
-                <option value="Low">Choose priority</option>
-                <option value="High">High</option>
-                <option value="Medium">Medium</option>
-                <option value="Low">Low</option>
-              </select>
-            </div>
-            <textarea
-              className={`${s.new_task__details} ${s.border}`}
-              id="taskDetails"
-              placeholder="Enter task details*"
-              maxLength={200}
-              rows={5}
-              required
-            />
-            <div className={s.new_task__button}>
-                <Button title="Add new Task" />
-            </div>
-            <div className={s.new_task__footnote}>* - required fields</div>
-          </form>
+      <CreateTask onAddTask={handleAddTask}/>
+      <FilterApp />
+      <main className={`${s.layout} top-indent`}>
+        <aside className={s.sidebar}>
+          <div className={s.sidebar__count}>
+            <h2>Created tasks:</h2>
+            <h1>{count}</h1>
           </div>
-      </section>
-      <section className={s.tasks}>
-            <Skeleton/>
-      </section>
+        </aside>
+
+        <section className={s.tasks}>
+          {isEmpty ? (
+            <div className={s.tasks__no_result}>
+              <h2>No tasks</h2>
+            </div>
+          ) : (
+            tasks.map((task) => (
+              <Card
+                key={task.id}
+                id={task.id}
+                title={task.title}
+                status={task.status}
+                priority={task.priority}
+                description={task.description}
+                createdAt={task.createdAt}
+              />
+            ))
+          )}
+          {/* <Skeleton /> */}
+        </section>
+      </main>
     </>
   );
 };

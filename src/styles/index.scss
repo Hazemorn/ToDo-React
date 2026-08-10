@@ -7,6 +7,7 @@
    --shadow: rgba(0, 0, 0, 0.1);
    --bkgdHeader:rgba(246, 246, 217, 1);
    --bkgrdCard: rgba(194, 200, 218, 1);
+   --bkgrdLite: rgb(226, 230, 244);
    --text: rgba(108, 108, 108, 1);
 }
 
@@ -69,3 +70,12 @@ html {
   scroll-behavior: smooth; 
 }
 
+.border {
+  border-radius: 15px;
+  border: 1px solid var(--title);
+  padding: 7px 15px;
+}
+
+.top-indent {
+  margin-top: 40px;
+}

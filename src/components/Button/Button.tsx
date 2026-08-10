@@ -1,3 +1,4 @@
+import React from "react";
 import s from "./Button.module.scss";
 
 interface ButtonProps {
@@ -9,7 +10,7 @@ interface ButtonProps {
   isDisabled?: boolean;
 }
 
-const Button = ({
+const Button = React.memo(({
   title,
   bgColor = "var(--white)",
   max_width = "280px",
@@ -32,6 +33,6 @@ const Button = ({
       {title}
     </button>
   );
-};
+});
 
 export default Button;

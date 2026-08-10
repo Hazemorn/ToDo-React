@@ -1,0 +1,13 @@
+@use '../../styles/mixins.scss' as m;
+
+.filter {
+    margin-top: 40px;
+    background-color: var(--shadow); 
+    padding: 15px 20px;
+    border-radius: 25px;
+    &__wrapper {
+        @include m.flex-dir(row);
+       justify-content: space-between;
+    }
+   
+}

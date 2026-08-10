@@ -1,0 +1,10 @@
+.priority__container {
+    max-width: fit-content;
+    select {
+        &:focus {
+          outline: none;
+        }
+        
+        -webkit-tap-highlight-color: transparent; 
+      }
+}
