@@ -1,4 +1,8 @@
 .new_task {
+    img {
+        position: absolute;
+        right: 5%;
+    }
     form {
         display: grid;
         grid-template-columns: 1fr 2fr;

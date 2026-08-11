@@ -1,20 +1,23 @@
 import { useState } from "react";
 import s from "./CreateTask.module.scss";
-import Button from "../Button/Button";
-import DropDownApp from "../DropDownApp/DropDownApp";
+import Button from "../ui/ButtonApp/ButtonApp";
+import DropDownApp from "../ui/DropDownApp/DropDownApp";
 import type { ITask, Priority } from "../../store/types/types";
 import { getDateFrame } from "../../utils/getDate";
-import { addTask } from "../../utils/addTask";
+import closeImg from "../../assets/icons/close.svg";
+import useTaskStore from "../../store/store";
 
 interface CreateTaskProps {
-    onAddTask: (task: ITask) => void;
+    onClose: () => void;
 }
 
-const CreateTask: React.FC<CreateTaskProps> = ({onAddTask}) => {
+const CreateTask: React.FC<CreateTaskProps> = ({ onClose}) => {
+
+  const addTask = useTaskStore(state => state.addTask)
+
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
-  const [priority, setPriority] = useState<Priority>("low");
-//   const [task, setTask] = useState<ITask | null>(null);
+  const [priority, setPriority] = useState<Priority>("none");
 
   const handleSubmit = (e: React.SubmitEvent<HTMLFormElement>) => {
     e.preventDefault(); 
@@ -32,16 +35,18 @@ const CreateTask: React.FC<CreateTaskProps> = ({onAddTask}) => {
       createdAt: getDateFrame(),
     };
     addTask(newTask);
-    onAddTask(newTask);
-
+    onClose();
     setTitle("");
     setDescription("");
-    setPriority("low");
+    setPriority("none");
+    
   };
 
   return (
     <section className={`${s.new_task} top-indent`}>
-      <form id="form" onSubmit={handleSubmit}>
+      <img className="pointer" src={closeImg} alt="close" loading="lazy" onClick={onClose}/>
+      <h1>Create a new task</h1>
+      <form id="form" className='top-indent' onSubmit={handleSubmit}>
         <input
           className={`${s.new_task__title} border`}
           type="text"

@@ -1,69 +1,69 @@
-@use '../../styles/mixins.scss' as *;
+@use "../../styles/mixins.scss" as *;
 
 .contact_us {
-    @include showCard;
-    &__body {
-        margin-top: 10px;
-        height: 90vh;
-        @include flex-dir(row);
-        justify-content: space-around;
-        background-color: var(--accent);
-        border-radius: 25px;
-    }
-    &__text {
-        @include flex-dir(column);
-        padding: 60px 0 80px 100px;
-        gap: 40px;
-        width: 50%;
-        max-width: 600px;
-    }
+  @include showCard;
+  &__body {
+    margin-top: 10px;
+    min-height: 90vh;
+    @include flex-dir(row);
+    justify-content: space-around;
+    background-color: var(--accent);
+    border-radius: 25px;
+  }
+  &__text {
+    @include flex-dir(column);
+    padding: 60px 0 80px 100px;
+    gap: 40px;
+    width: 50%;
+    max-width: 600px;
+  }
 
-    &__data {
-        @include flex-dir(column);
-        gap: 25px;
-        label {
-            @include flex-dir(column);
-            gap: 5px;
-        }
-        input, textarea {
-            padding: 18px 30px;
-            border-radius: 14px;
-            max-width: 520px;
-            border: 1px solid var(--title);
-            background-color: var(--background);
-            width: 100%;  
-            box-sizing: border-box;
-        }
+  &__data {
+    @include flex-dir(column);
+    gap: 25px;
+    label {
+      @include flex-dir(column);
+      gap: 5px;
     }
-    &__textarea_message {
-        resize: none;
-        overflow-y: auto;
+    input,
+    textarea {
+      padding: 18px 30px;
+      border-radius: 14px;
+      max-width: 520px;
+      border: 1px solid var(--title);
+      background-color: var(--background);
+      width: 100%;
+      box-sizing: border-box;
     }
-    
-    &__img {
-        @include flex-hybrid(none, center);
-        width: 40%;
-        img {
-            border-radius: 15px;
-            overflow: hidden;
-        }
+  }
+  &__textarea_message {
+    resize: none;
+    overflow-y: auto;
+  }
+
+  &__img {
+    @include flex-hybrid(none, center);
+    width: 40%;
+    img {
+      border-radius: 15px;
+      overflow: hidden;
     }
+  }
 }
 
-@media screen  
-and (max-width: 768px) {
-    .contact_us{
-        &__body {
-            @include flex-hybrid(center, center);
-            width: 100%;
-        }
-        &__img {
-        display: none;
-        }
-        &__text {
-        
-            width: 100%;
-            padding: 40px 30px;
-        }
+@media screen and (max-width: 768px) {
+  .contact_us {
+    &__body {
+      @include flex-hybrid(center, center);
+      width: 100%;
+      flex-direction: column;
     }
+    &__img {
+      display: none;
+    }
+    &__text {
+      width: 100%;
+      padding: 40px 30px;
+    }
+  }
 }

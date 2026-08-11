@@ -1,5 +1,6 @@
 @use '../../styles/mixins.scss' as *;
 .about {
+    padding:0 20px;
     margin-top: 20px;
     @include flex-hybrid(space-between, none);
     flex-direction: column;

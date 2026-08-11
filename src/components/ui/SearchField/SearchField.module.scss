@@ -1,4 +1,4 @@
-@use '../../styles/mixins.scss' as *;
+@use '../../../styles/mixins.scss' as *;
 
 .search {
   max-width: 400px;
@@ -20,7 +20,6 @@
   button {
     position: absolute;
     left: 15px;
-    cursor: pointer;
     transition: transform 0.2s ease;
     &:hover {
       transform: scale(1.2);

@@ -1,43 +1,70 @@
-import { useCallback, useState } from "react";
+import { useEffect, useState } from "react";
 import s from "./Home.module.scss";
 
 import FilterApp from "../../components/FilterApp/FilterApp";
-//import Skeleton from "../../components/Skeleton/Skeleton";
+import Skeleton from "../../components/ui/Skeleton/Skeleton";
 import CreateTask from "../../components/CreateTask/CreateTask";
 import Card from "../../components/Card/Card";
-import type { ITask } from "../../store/types/types";
+import ModalApp from "../../components/ui/ModalApp/ModalApp";
+import ButtonApp from "../../components/ui/ButtonApp/ButtonApp";
+import useTaskStore from "../../store/store";
 
 const Home = () => {
-  const handleAddTask = useCallback((newTask: ITask) => {
-    setTasks((prev) => [...prev, newTask]);
-  }, []);
+    const isLoading = useTaskStore((state) => state.isLoading);
+    const getTasks = useTaskStore((state) => state.getTasks);
+    const tasks = useTaskStore((state) => state.tasks);
 
-  const [tasks, setTasks] = useState<ITask[]>(() => {
-    const saved = localStorage.getItem("tasks");
-    return saved ? JSON.parse(saved) : [];
+    const searchQuery = useTaskStore((state) => state.searchQuery);
+    const statusFilter = useTaskStore((state) => state.statusFilter);
+
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+
+  useEffect(() => {
+    getTasks();
+  }, [getTasks]);
+
+  const visibleTasks = tasks.filter((task) => {
+    const matchesStatus = statusFilter === "all" || task.status === statusFilter;
+
+    const matchesText =
+      task.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      (task.description?.toLowerCase() || "").includes(searchQuery.toLowerCase());
+
+    return matchesStatus && matchesText;
   });
+
   const count = tasks.length;
-  const isEmpty = tasks.length === 0;
+  const isEmpty = visibleTasks.length === 0;
 
   return (
     <>
-      <CreateTask onAddTask={handleAddTask}/>
+      {isModalOpen && (
+        <ModalApp isModalOpen={isModalOpen} width="100%">
+          <CreateTask onClose={() => setIsModalOpen(false)} />
+        </ModalApp>
+      )}
       <FilterApp />
       <main className={`${s.layout} top-indent`}>
         <aside className={s.sidebar}>
           <div className={s.sidebar__count}>
             <h2>Created tasks:</h2>
             <h1>{count}</h1>
+            <ButtonApp
+              title="Create new task"
+              onClick={() => setIsModalOpen(true)}
+            />
           </div>
         </aside>
 
         <section className={s.tasks}>
-          {isEmpty ? (
+        {isLoading ? (
+            <Skeleton />
+          ) : isEmpty ? ( 
             <div className={s.tasks__no_result}>
               <h2>No tasks</h2>
             </div>
           ) : (
-            tasks.map((task) => (
+            visibleTasks.map((task) => (
               <Card
                 key={task.id}
                 id={task.id}
@@ -49,7 +76,6 @@ const Home = () => {
               />
             ))
           )}
-          {/* <Skeleton /> */}
         </section>
       </main>
     </>

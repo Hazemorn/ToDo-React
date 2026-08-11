@@ -3,7 +3,7 @@ import { Route, Routes, useLocation } from "react-router";
 
 import Header from "./components/Header/Header";
 import NotFoundBlock from "./pages/NotFoundBlock";
-import Loading from "./components/Loading";
+import Loading from "./components/ui/Loading";
 
 const Homepage = lazy(() => import("./pages/Home/Home"));
 const Contact = lazy(() => import("./pages/Contact/Contact"));

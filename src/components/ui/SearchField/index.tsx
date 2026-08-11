@@ -1,7 +1,7 @@
 import React from 'react';
 import s from "./SearchField.module.scss";
 import { useState, useRef, useCallback } from "react"; 
-import magnifierImg from "../../assets/icons/magnifier.svg";
+import magnifierImg from "../../../assets/icons/magnifier.svg";
 import debounce from 'lodash.debounce';
 
 
@@ -59,7 +59,7 @@ const SearchField = React.memo(({ onSearch }: SearchFieldProps) => {
         }}
         maxLength={70}
       />
-      <button type="submit">
+      <button type="submit" className='pointer'>
         <img src={magnifierImg} alt={magnifierImg} loading="lazy" />
       </button>
     </form>

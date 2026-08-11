@@ -4,7 +4,7 @@
    --accent: rgb(234, 218, 148);
    --background:rgba(255, 255, 255, 1);
    --title:rgba(0, 0, 0, 1);
-   --shadow: rgba(0, 0, 0, 0.1);
+   --shadow: rgba(0, 0, 0, 0.6);
    --bkgdHeader:rgba(246, 246, 217, 1);
    --bkgrdCard: rgba(194, 200, 218, 1);
    --bkgrdLite: rgb(226, 230, 244);
@@ -78,4 +78,8 @@ html {
 
 .top-indent {
   margin-top: 40px;
+}
+
+.pointer {
+  cursor: pointer;
 }

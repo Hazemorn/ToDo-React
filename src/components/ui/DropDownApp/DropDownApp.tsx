@@ -1,34 +1,31 @@
-import { useState } from "react";
+//import { useState } from "react";
 import s from "./DropDownApp.module.scss";
-import type { Priority } from "../../store/types/types";
-import { PRIORITY_OPTIONS, STATUS_OPTIONS } from "../../store/constans";
+import type { Priority, Status } from "../../../store/types/types";
+import { PRIORITY_OPTIONS, STATUS_OPTIONS } from "../../../store/constans";
 
 interface DropDownProps {
   label: string;
   onSelect?: (value: Priority) => void;
   fromCreated: boolean;
+  value?: Priority | Status; 
+  onChange?: (value: any) => void; 
 }
 
-const DropDownApp: React.FC<DropDownProps> = ({ label, onSelect,fromCreated }) => {
-  const [priority, setPriority] = useState<Priority | ''>(''); 
+const DropDownApp: React.FC<DropDownProps> = ({ label, onSelect, fromCreated, value, onChange }) => {
+  //const [priority, setPriority] = useState<Priority>('none'); 
 
 
   const selectHandler = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const value = e.target.value as Priority;
-    
-    setPriority(value);
-  
-    if (onSelect) {
-      onSelect(value);
-    }
+    onChange?.(e.target.value);
   };
 
   return (
     <div className={`${s.priority__container} border`}>
       <select
-        name="priority--add"
-        id="priority--add"
-        value={priority} 
+        className="pointer"
+        name={fromCreated ? "priority--add" : "status--filter"}
+        id={fromCreated ? "priority--add" : "status--filter"}
+        value={value} 
         onChange={selectHandler}
       >
         <option value="" disabled>

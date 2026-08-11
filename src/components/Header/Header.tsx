@@ -28,11 +28,12 @@ const Header = () => {
           <NavLink to={"/contact"}>Contact Us</NavLink>
           <NavLink to={"/about"}>About project</NavLink>
         </div>
-        <div className={`${s.header__burger}`}>
+        <div className={`${s.header__burger} pointer`}>
           <img
             src={burgerImg}
             alt="burgerIcon"
             loading="lazy"
+            style={{width: '24px'}}
             onClick={() => setIsMenuOpen(true)}
           />
         </div>
@@ -44,7 +45,7 @@ const Header = () => {
             src={closeImg}
             alt="close"
             loading="lazy"
-            className={s.close}
+            className={`${s.close} pointer`}
             onClick={() => setIsMenuOpen(false)}
           />
           <div className={s.mobile__links}>
@@ -52,6 +53,7 @@ const Header = () => {
               Home
             </NavLink>
             <NavLink to={"/contact"}>Contact Us</NavLink>
+            <NavLink to={"/about"}>About project</NavLink>
           </div>
         </div>
       )}

@@ -1,5 +1,5 @@
-export type Priority = 'low' | 'medium' | 'high';
-export type Status = 'todo' | 'in_progress' | 'done';
+export type Priority = 'none' | 'low' | 'medium' | 'high';
+export type Status =  'all' | 'todo' | 'in_progress' | 'done';
 
 export interface ITask {
   id: string; 
