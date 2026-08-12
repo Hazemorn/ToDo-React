@@ -51,11 +51,6 @@ const SearchField = React.memo(({ onSearch }: SearchFieldProps) => {
         value={inputValue}
         onChange={(e) => {
           onChangeInput(e)
-          // const value = e.target.value;
-          // setInputValue(value);
-          // if (value === "") {
-          //   onSearch("");
-          // }
         }}
         maxLength={70}
       />

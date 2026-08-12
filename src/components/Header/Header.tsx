@@ -4,7 +4,6 @@ import s from "./Header.module.scss";
 
 import burgerImg from "../../assets/icons/burger.svg";
 import closeImg from "../../assets/icons/close.svg";
-//import { useAppSelector } from "../../hooks/redux";
 
 const Header = () => {
  

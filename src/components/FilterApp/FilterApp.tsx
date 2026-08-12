@@ -1,8 +1,10 @@
 import s from "./FilterApp.module.scss";
+
 import SearchField from "../ui/SearchField";
 import filterImg from "../../assets/icons/filter.svg";
 import DropDownApp from "../ui/DropDownApp/DropDownApp";
 import React from "react";
+
 import useTaskStore from "../../store/store";
 
 const FilterApp = React.memo(() => {
@@ -21,7 +23,7 @@ const FilterApp = React.memo(() => {
         <SearchField onSearch={setSearchQuery} />
         <DropDownApp
           label="Filter by status"
-          fromCreated={false}
+          isPriotity={false}
           value={statusFilter}
           onChange={setStatusFilter}
         />

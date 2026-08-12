@@ -7,6 +7,7 @@ import CreateTask from "../../components/CreateTask/CreateTask";
 import Card from "../../components/Card/Card";
 import ModalApp from "../../components/ui/ModalApp/ModalApp";
 import ButtonApp from "../../components/ui/ButtonApp/ButtonApp";
+
 import useTaskStore from "../../store/store";
 
 const Home = () => {

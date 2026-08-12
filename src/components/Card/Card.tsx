@@ -1,32 +1,43 @@
 import React from "react";
-import type { Priority, Status } from "../../store/types/types";
 import s from "./Card.module.scss";
+import type { Priority, Status } from "../../store/types/types";
+import { useNavigate } from "react-router";
 import useTaskStore from "../../store/store";
+
 import trashcanImg from "../../assets/icons/trash-can.svg";
+import { PRIORITY_OPTIONS, STATUS_OPTIONS } from "../../store/constans";
 
 interface CardProps {
-  id?: string;
+  id: string;
   title: string;
-  description?: string;
+  description: string;
   status: Status;
   priority: Priority;
-  createdAt?: string;
+  createdAt: string;
 }
 
-const Card: React.FC<CardProps> = React.memo(({ ...args }) => {
+const Card: React.FC<CardProps> = React.memo((props) => {
   const deleteTask = useTaskStore((state) => state.deleteTask);
+  const selectTask = useTaskStore((state) => state.selectTask);
+  const navigate = useNavigate();
+  
+  const onClickInfo = () => {
+    selectTask(props);
+    navigate('/details');
+  };
 
-  const onClickInfo = () => {};
+  const selectedStatus = STATUS_OPTIONS.find((s) => s.value === props.status);
+
   return (
     <div className={`${s.card} border`}>
       <div className={s.card__wrapper}>
-        <h3>{args.title}</h3>
+        <h3>{props.title}</h3>
         <div className={s.card__condition}>
-          <p>{args.status}</p>
-          <p>{args.priority}</p>
+          <p>{selectedStatus.label}</p>
+          <p style={{ color: PRIORITY_OPTIONS.find(option => option.value === props.priority)?.color || 'var(--title)'}}>{props.priority}</p>
         </div>
-        <div className={s.card__info} onClick={onClickInfo}>
-          <h4 className="pointer">More info</h4>
+        <div className={s.card__info}>
+          <h4 className="pointer" onClick={onClickInfo}>More info</h4>
           <div className={s.card__delete}>
             <img
               className="pointer"
@@ -34,7 +45,7 @@ const Card: React.FC<CardProps> = React.memo(({ ...args }) => {
               alt="delete"
               loading="lazy"
               style={{ width: "25px" }}
-              onClick={() => deleteTask(args.id)}
+              onClick={() => deleteTask(props.id)}
             />
           </div>
         </div>

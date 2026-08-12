@@ -1,8 +1,8 @@
 import { useState } from "react";
 import s from "./Contact.module.scss";
-import Button from "../../components/ui/ButtonApp/ButtonApp";
 import contactImg from '../../assets/imgs/contact-us.png';
 import ModalApp from "../../components/ui/ModalApp/ModalApp";
+import ButtonApp from "../../components/ui/ButtonApp/ButtonApp";
 
 
 const ContactUs = () => {
@@ -25,7 +25,7 @@ const ContactUs = () => {
               <h3>Success!</h3>
               <p>Your request has been sent.</p>
               <div className={s.button_block}>
-                  <Button title={"Ok"} onClick={() => setIsSuccessModalOpen(false)}/>
+                  <ButtonApp title={"Ok"} onClick={() => setIsSuccessModalOpen(false)}/>
               </div>
       </ModalApp>
 
@@ -73,7 +73,7 @@ const ContactUs = () => {
                   />
                 </label>
               </div>
-              <Button title="Send Message" max_width="550px" />
+              <ButtonApp title="Send Message" max_width="550px" />
               <div> * - required fields</div>
             </form>
           </div>

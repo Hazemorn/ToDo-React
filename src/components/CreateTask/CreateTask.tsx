@@ -1,30 +1,26 @@
 import { useState } from "react";
 import s from "./CreateTask.module.scss";
-import Button from "../ui/ButtonApp/ButtonApp";
 import DropDownApp from "../ui/DropDownApp/DropDownApp";
 import type { ITask, Priority } from "../../store/types/types";
 import { getDateFrame } from "../../utils/getDate";
 import closeImg from "../../assets/icons/close.svg";
 import useTaskStore from "../../store/store";
+import ButtonApp from "../ui/ButtonApp/ButtonApp";
 
 interface CreateTaskProps {
     onClose: () => void;
 }
 
-const CreateTask: React.FC<CreateTaskProps> = ({ onClose}) => {
+const CreateTask: React.FC<CreateTaskProps> = ({onClose}) => {
 
   const addTask = useTaskStore(state => state.addTask)
 
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
-  const [priority, setPriority] = useState<Priority>("none");
+  const [priority, setPriority] = useState<Priority>("low");
 
   const handleSubmit = (e: React.SubmitEvent<HTMLFormElement>) => {
     e.preventDefault(); 
-    if (!title.trim() || !description.trim() || !priority) {
-        alert("Please fill in all required fields!");
-        return;
-      }
 
     const newTask: ITask = {
       id: Date.now().toString(),
@@ -38,7 +34,7 @@ const CreateTask: React.FC<CreateTaskProps> = ({ onClose}) => {
     onClose();
     setTitle("");
     setDescription("");
-    setPriority("none");
+    setPriority("low");
     
   };
 
@@ -58,7 +54,7 @@ const CreateTask: React.FC<CreateTaskProps> = ({ onClose}) => {
           required
         />
         <div className={s.new_task__priority}>
-          <DropDownApp label="Choose priority" onSelect={setPriority} fromCreated={true}/>
+          <DropDownApp label="Choose priority" value={priority} onChange={setPriority}/>
         </div>
         <textarea
           className={`${s.new_task__details} border`}
@@ -71,7 +67,7 @@ const CreateTask: React.FC<CreateTaskProps> = ({ onClose}) => {
           required
         />
         <div className={s.new_task__button}>
-          <Button title="Add new Task"/>
+          <ButtonApp title="Add new Task"/>
         </div>
         <div className={s.new_task__footnote}>* - required fields</div>
       </form>

@@ -1,49 +1,41 @@
-//import { useState } from "react";
 import s from "./DropDownApp.module.scss";
 import type { Priority, Status } from "../../../store/types/types";
 import { PRIORITY_OPTIONS, STATUS_OPTIONS } from "../../../store/constans";
 
 interface DropDownProps {
   label: string;
-  onSelect?: (value: Priority) => void;
-  fromCreated: boolean;
+  isPriotity?: boolean;
   value?: Priority | Status; 
+  disable?: boolean;
   onChange?: (value: any) => void; 
 }
 
-const DropDownApp: React.FC<DropDownProps> = ({ label, onSelect, fromCreated, value, onChange }) => {
-  //const [priority, setPriority] = useState<Priority>('none'); 
-
+const DropDownApp: React.FC<DropDownProps> = ({ label, isPriotity = true, value, onChange, disable=false }) => {
 
   const selectHandler = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    onChange?.(e.target.value);
+    onChange(e.target.value);
   };
+  const currentOptions = isPriotity ? PRIORITY_OPTIONS : STATUS_OPTIONS;
+  const selectedOption = currentOptions.find((opt) => opt.value === value);
+  const currentBackgroundColor = selectedOption?.color;
 
   return (
-    <div className={`${s.priority__container} border`}>
+    <div className={`${s.priority__container} border`} style={{ backgroundColor: currentBackgroundColor }}>
+       {label}:
       <select
         className="pointer"
-        name={fromCreated ? "priority--add" : "status--filter"}
-        id={fromCreated ? "priority--add" : "status--filter"}
-        value={value} 
+        value={value}
         onChange={selectHandler}
-      >
-        <option value="" disabled>
-            {label}
-        </option>
-        {fromCreated ?
-        PRIORITY_OPTIONS.map((option) => (
-          <option key={option.value} value={option.value}>
+        disabled={disable}
+      > 
+       {currentOptions.map((option) => (
+          <option 
+            key={option.value} 
+            value={option.value}
+             >
             {option.label}
           </option>
-        ))
-        :
-        STATUS_OPTIONS.map((option) => (
-          <option key={option.value} value={option.value}>
-            {option.label}
-          </option>
-        ))
-      }
+        ))}
       </select>
     </div>
   );
