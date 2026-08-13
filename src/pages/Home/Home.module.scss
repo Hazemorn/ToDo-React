@@ -23,3 +23,9 @@
         top: 50%;
     }
 }
+
+@media screen and (max-width: 768px) {
+    .layout {
+        @include m.flex-dir(column);
+    }
+}

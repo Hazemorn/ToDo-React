@@ -2,18 +2,18 @@ import s from "./DropDownApp.module.scss";
 import type { Priority, Status } from "../../../store/types/types";
 import { PRIORITY_OPTIONS, STATUS_OPTIONS } from "../../../store/constans";
 
-interface DropDownProps {
+interface DropDownProps<T extends Priority | Status>  {
   label: string;
   isPriotity?: boolean;
-  value?: Priority | Status; 
+  value?: T;
   disable?: boolean;
-  onChange?: (value: any) => void; 
+  onChange?: (value: T) => void; 
 }
 
-const DropDownApp: React.FC<DropDownProps> = ({ label, isPriotity = true, value, onChange, disable=false }) => {
+const DropDownApp =<T extends Priority | Status>({ label, isPriotity = true, value, onChange, disable=false }: DropDownProps<T>) => {
 
   const selectHandler = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    onChange(e.target.value);
+    onChange(e.target.value as T);
   };
   const currentOptions = isPriotity ? PRIORITY_OPTIONS : STATUS_OPTIONS;
   const selectedOption = currentOptions.find((opt) => opt.value === value);

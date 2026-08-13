@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import s from "./Home.module.scss";
 
 import FilterApp from "../../components/FilterApp/FilterApp";
@@ -9,31 +9,25 @@ import ModalApp from "../../components/ui/ModalApp/ModalApp";
 import ButtonApp from "../../components/ui/ButtonApp/ButtonApp";
 
 import useTaskStore from "../../store/store";
+import { useTasks } from "../../services/tasks/getTasks";
+
 
 const Home = () => {
-    const isLoading = useTaskStore((state) => state.isLoading);
-    const getTasks = useTaskStore((state) => state.getTasks);
-    const tasks = useTaskStore((state) => state.tasks);
+  const { data: tasks = [], isLoading } = useTasks();
 
-    const searchQuery = useTaskStore((state) => state.searchQuery);
-    const statusFilter = useTaskStore((state) => state.statusFilter);
-
+  const searchQuery = useTaskStore((state) => state.searchQuery);
+  const statusFilter = useTaskStore((state) => state.statusFilter);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 
-  useEffect(() => {
-    getTasks();
-  }, [getTasks]);
 
   const visibleTasks = tasks.filter((task) => {
     const matchesStatus = statusFilter === "all" || task.status === statusFilter;
-
     const matchesText =
       task.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
       (task.description?.toLowerCase() || "").includes(searchQuery.toLowerCase());
 
     return matchesStatus && matchesText;
   });
-
   const count = tasks.length;
   const isEmpty = visibleTasks.length === 0;
 
@@ -59,7 +53,11 @@ const Home = () => {
 
         <section className={s.tasks}>
         {isLoading ? (
-            <Skeleton />
+          <div className={s.tasks__skeleton}>
+            {[...Array(3)].map((_, index) => (
+            <Skeleton key={index} />
+          ))}
+          </div>
           ) : isEmpty ? ( 
             <div className={s.tasks__no_result}>
               <h2>No tasks</h2>

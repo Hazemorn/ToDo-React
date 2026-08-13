@@ -6,6 +6,7 @@ import useTaskStore from "../../store/store";
 
 import trashcanImg from "../../assets/icons/trash-can.svg";
 import { PRIORITY_OPTIONS, STATUS_OPTIONS } from "../../store/constans";
+import { useDeleteTask } from "../../services/tasks/deleteTask";
 
 interface CardProps {
   id: string;
@@ -17,14 +18,18 @@ interface CardProps {
 }
 
 const Card: React.FC<CardProps> = React.memo((props) => {
-  const deleteTask = useTaskStore((state) => state.deleteTask);
+
   const selectTask = useTaskStore((state) => state.selectTask);
   const navigate = useNavigate();
+  const deleteTaskMutation = useDeleteTask();
   
   const onClickInfo = () => {
     selectTask(props);
-    navigate('/details');
+    navigate(`/details/${props.id}`); 
   };
+  const onClickDelete = () => {
+    deleteTaskMutation.mutate(props.id)
+  }
 
   const selectedStatus = STATUS_OPTIONS.find((s) => s.value === props.status);
 
@@ -45,7 +50,7 @@ const Card: React.FC<CardProps> = React.memo((props) => {
               alt="delete"
               loading="lazy"
               style={{ width: "25px" }}
-              onClick={() => deleteTask(props.id)}
+              onClick={onClickDelete}
             />
           </div>
         </div>

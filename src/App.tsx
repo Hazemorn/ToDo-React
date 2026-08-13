@@ -26,7 +26,7 @@ function App() {
             <Route index element={<Homepage />} />
             <Route path="contact" element={<Contact />} />
             <Route path="about" element={<About />} />
-            <Route path="details" element={<TaskDetail />} />
+            <Route path="details/:id" element={<TaskDetail />} />
             <Route path="*" element={<NotFoundBlock/>} />
           </Routes>
         </Suspense>

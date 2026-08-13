@@ -18,8 +18,9 @@ This project was built as a study case to master the component-driven architectu
 *   **React:** For building a declarative, component-based user interface with efficient DOM updates.
 *   **TypeScript:** For strict typing of component props, state structures, and application logic to prevent runtime errors.
 *   **SCSS Modules:** For scoped, modular, and maintainable styling that eliminates class name collisions.
-*   **Web Storage API (LocalStorage):** For seamless, client-side data persistence.
-*   **Prettier:**
+*   **Prettier:** Сode formatting.
+*   **Zustand:** Zustand-page handles only the local interface (UI) (search, filters).
+*   **React Query:** React Query handles the cache and server requests (loading, creating, editing, deleting).
 
 ---
 ## How to run project

@@ -4,8 +4,8 @@ import DropDownApp from "../ui/DropDownApp/DropDownApp";
 import type { ITask, Priority } from "../../store/types/types";
 import { getDateFrame } from "../../utils/getDate";
 import closeImg from "../../assets/icons/close.svg";
-import useTaskStore from "../../store/store";
 import ButtonApp from "../ui/ButtonApp/ButtonApp";
+import { useCreateTask } from "../../services/tasks/postTasks";
 
 interface CreateTaskProps {
     onClose: () => void;
@@ -13,14 +13,14 @@ interface CreateTaskProps {
 
 const CreateTask: React.FC<CreateTaskProps> = ({onClose}) => {
 
-  const addTask = useTaskStore(state => state.addTask)
+  const createTaskMutation = useCreateTask();
 
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [priority, setPriority] = useState<Priority>("low");
 
   const handleSubmit = (e: React.SubmitEvent<HTMLFormElement>) => {
-    e.preventDefault(); 
+    e.preventDefault();
 
     const newTask: ITask = {
       id: Date.now().toString(),
@@ -30,12 +30,15 @@ const CreateTask: React.FC<CreateTaskProps> = ({onClose}) => {
       priority,
       createdAt: getDateFrame(),
     };
-    addTask(newTask);
+    createTaskMutation.mutate({newTask}, {
+      onSuccess: () => {
+        onClose();
+      }
+    });
     onClose();
     setTitle("");
     setDescription("");
     setPriority("low");
-    
   };
 
   return (
@@ -54,7 +57,7 @@ const CreateTask: React.FC<CreateTaskProps> = ({onClose}) => {
           required
         />
         <div className={s.new_task__priority}>
-          <DropDownApp label="Choose priority" value={priority} onChange={setPriority}/>
+          <DropDownApp label="Choose priority" value={priority} onChange={(val) => setPriority(val as Priority)}/>
         </div>
         <textarea
           className={`${s.new_task__details} border`}

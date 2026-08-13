@@ -1,5 +1,5 @@
 import s from "./TaskDetail.module.scss";
-import { useNavigate } from "react-router";
+import { useNavigate} from "react-router";//, useParams 
 import { useEffect, useState } from "react";
 import ButtonApp from "../../components/ui/ButtonApp/ButtonApp";
 import DropDownApp from "../../components/ui/DropDownApp/DropDownApp";
@@ -7,25 +7,33 @@ import DropDownApp from "../../components/ui/DropDownApp/DropDownApp";
 import editImg from "../../assets/icons/edit.svg";
 import trashcanImg from "../../assets/icons/trash-can.svg";
 
-import useTaskStore from "../../store/store";
 import type { Priority, Status } from "../../store/types/types";
+import { useTaskDetail } from "../../services/tasks/getTasks";
+import { useDeleteTask } from "../../services/tasks/deleteTask";
+import { useUpdateTask } from "../../services/tasks/updateTask";
 
 const TaskDetail = () => {
   const [edit, setEdit] = useState<boolean>(false);
-  const editTask = useTaskStore((state) => state.editTask);
-  const deleteTask = useTaskStore((state) => state.deleteTask);
-  const currentTask = useTaskStore((state) => state.currentTask);
 
-  const [localTitle, setLocalTitle] = useState<string>(currentTask.title);
-  const [localDescription, setLocalDescription] = useState<string>(currentTask.description);
-  const [localPriority, setLocalPriority] = useState<Priority>(currentTask.priority);
-  const [localStatus, setLocalStatus] =useState<Status>(currentTask.status);
+
+  // const {id} = useParams<{ id: string }>();
+  const {data: currentTask, isError, isLoading} = useTaskDetail();
+  const deleteTaskMutation = useDeleteTask();
+  const updateTaskMutation = useUpdateTask();
+
+  console.log(currentTask);
+  const [localTitle, setLocalTitle] = useState<string>('');
+  const [localDescription, setLocalDescription] = useState<string>('');
+  const [localPriority, setLocalPriority] = useState<Priority>('low' as Priority);
+  const [localStatus, setLocalStatus] =useState<Status>('todo' as Status);
 
   useEffect(() => {
-    setLocalTitle(currentTask.title);
-    setLocalDescription(currentTask.description || "");
-    setLocalPriority(currentTask.priority);
-    setLocalStatus(currentTask.status);
+    if(currentTask) {
+      setLocalTitle(currentTask.title);
+      setLocalDescription(currentTask.description || "");
+      setLocalPriority(currentTask.priority);
+      setLocalStatus(currentTask.status);
+    }
   }, [currentTask]);
 
 
@@ -35,9 +43,13 @@ const TaskDetail = () => {
   };
 
   const deleteHandler = () => {
-    deleteTask(currentTask.id);
-    navigate("/");
+    deleteTaskMutation.mutate(currentTask.id, {
+      onSuccess: () => {
+        navigate("/");
+      }
+    });
   };
+
   const editHandler = () => {
     setEdit(true);
   };
@@ -45,14 +57,21 @@ const TaskDetail = () => {
   const saveHandler = (e: React.SubmitEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    editTask(currentTask.id, {
+    const updatedFields = {
       title: localTitle,
       description: localDescription,
       priority: localPriority,
       status: localStatus,
-    });
-    
-    setEdit(false); 
+    };
+
+    updateTaskMutation.mutate(
+      { id: currentTask.id, fields: updatedFields },
+      {
+        onSuccess: () => {
+          setEdit(false);
+        },
+      }
+    );
   };
 
   const cancelHandler = () => {
@@ -63,8 +82,17 @@ const TaskDetail = () => {
     setEdit(false);
   };
 
+
+  if (isLoading) {
+    return <div className={s.loading}><h4>Loading task details...</h4></div>;
+  }
+
   return (
-    <form className={`${s.detail} border`} onSubmit={(e)=>saveHandler(e)}>
+    <>
+    {isError ? (
+      <div><h4>Something went wrong. Please try again</h4></div>
+    ) :
+    (<form className={`${s.detail} border`} onSubmit={(e)=>saveHandler(e)}>
       <ButtonApp title="< Back" onClick={onClickBack} max_width="fit-content" />
       <h2 className={"top-indent"}>
         <input
@@ -85,7 +113,7 @@ const TaskDetail = () => {
           <DropDownApp
             label="Priority"
             value={localPriority}
-            onChange={setLocalPriority}
+            onChange={(val) => setLocalPriority(val as Priority)}
             disable={!edit}
           />
         </div>
@@ -94,7 +122,7 @@ const TaskDetail = () => {
             label="Status"
             isPriotity={false}
             value={localStatus}
-            onChange={setLocalStatus}
+            onChange={(val) => setLocalStatus(val as Status)}
             disable={!edit}
           />
         </div>
@@ -129,7 +157,9 @@ const TaskDetail = () => {
           <ButtonApp title="Cancel" max_width="150px" onClick={cancelHandler} />
         </div>
       )}
-    </form>
+    </form>)
+    }
+    </> 
   );
 };
 
