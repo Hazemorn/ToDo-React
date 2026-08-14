@@ -46,6 +46,7 @@ This project is built using an efficient, modern, and highly scalable stack:
 *   **Axios** — A promise-based HTTP client featuring pre-configured instances and interceptor configurations.
 *   **React Router v6** — A declarative client-side routing library supporting dynamic URL parameters (`:id`).
 *   **SASS / SCSS Modules** — Scoped and modular styling that prevents CSS class name collisions across different views.
+*   **Debounce** - Using debounce for searching.
 
 --
 ## 🛠️ Technical Decisions & Best Practices
