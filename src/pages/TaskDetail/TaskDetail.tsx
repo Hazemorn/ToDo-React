@@ -1,5 +1,5 @@
 import s from "./TaskDetail.module.scss";
-import { useNavigate} from "react-router";//, useParams 
+import { useNavigate} from "react-router"; 
 import { useEffect, useState } from "react";
 import ButtonApp from "../../components/ui/ButtonApp/ButtonApp";
 import DropDownApp from "../../components/ui/DropDownApp/DropDownApp";
@@ -8,9 +8,9 @@ import editImg from "../../assets/icons/edit.svg";
 import trashcanImg from "../../assets/icons/trash-can.svg";
 
 import type { Priority, Status } from "../../store/types/types";
-import { useTaskDetail } from "../../services/tasks/getTasks";
-import { useDeleteTask } from "../../services/tasks/deleteTask";
-import { useUpdateTask } from "../../services/tasks/updateTask";
+import { useDeleteTask, useUpdateTask } from "../../hooks/tasksMutations";
+import { useTaskDetail } from "../../hooks/tasksQuery";
+
 
 const TaskDetail = () => {
   const [edit, setEdit] = useState<boolean>(false);

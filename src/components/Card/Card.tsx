@@ -6,7 +6,7 @@ import useTaskStore from "../../store/store";
 
 import trashcanImg from "../../assets/icons/trash-can.svg";
 import { PRIORITY_OPTIONS, STATUS_OPTIONS } from "../../store/constans";
-import { useDeleteTask } from "../../services/tasks/deleteTask";
+import { useDeleteTask } from "../../hooks/tasksMutations";
 
 interface CardProps {
   id: string;

@@ -9,7 +9,8 @@ import ModalApp from "../../components/ui/ModalApp/ModalApp";
 import ButtonApp from "../../components/ui/ButtonApp/ButtonApp";
 
 import useTaskStore from "../../store/store";
-import { useTasks } from "../../services/tasks/getTasks";
+import { useTasks } from "../../hooks/tasksQuery";
+
 
 
 const Home = () => {

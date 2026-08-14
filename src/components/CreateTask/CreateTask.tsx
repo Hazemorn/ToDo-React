@@ -5,7 +5,7 @@ import type { ITask, Priority } from "../../store/types/types";
 import { getDateFrame } from "../../utils/getDate";
 import closeImg from "../../assets/icons/close.svg";
 import ButtonApp from "../ui/ButtonApp/ButtonApp";
-import { useCreateTask } from "../../services/tasks/postTasks";
+import { useCreateTask } from "../../hooks/tasksMutations";
 
 interface CreateTaskProps {
     onClose: () => void;
