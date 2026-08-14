@@ -13,8 +13,7 @@ Follow these steps to clone and run the project locally on your machine:
 
 ### 1. Clone the Repository
 ```bash
-git clone https://github.com
-cd ToDo-React/toDo-vite
+git clone https://github.com/Hazemorn/ToDo-React.git
 ```
 
 ### 2. Install Dependencies
