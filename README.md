@@ -23,7 +23,32 @@ npm install
 ```
 
 ### 3. Set Up Environment Variables (.env)
-Create a `.env` file in the root of your Vite project folder (`toDo-vite/`) and provide the base URL for your backend API (e.g., MockAPI endpoint):
+Create a `.env` file in the root of your Vite project folder (`toDo-vite/`) and provide the base URL for your backend API (e.g., MockAPI endpoint).
+
+MockApi example data:
+```
+[
+  {
+    "id": "1786535351570",
+    "title": "TitleLow",
+    "description": "TitleLows",
+    "status": "in_progress",
+    "priority": "medium",
+    "createdAt": "12-08-2026"
+  },
+  {
+    "id": "1786534933073",
+    "title": "Task2Edit",
+    "description": "Task2Ed",
+    "status": "done",
+    "priority": "high",
+    "createdAt": "12-08-2026"
+  }
+]
+```
+MockApi Schema:
+
+<img width="762" height="442" alt="Screenshot 2026-08-14 at 13 28 19" src="https://github.com/user-attachments/assets/7d284155-e39c-4bd3-9bb6-be6657fc2af8" />
 
 ### 4. Run the Development Server
 Start the local Vite dev server:
