@@ -15,5 +15,8 @@ export const useDeleteTask = () => {
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ["tasks"] });
         },
+        onError: () => {
+            console.log('User deletion failed');
+        }
     });
 };

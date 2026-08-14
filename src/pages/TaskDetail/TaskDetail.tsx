@@ -14,14 +14,11 @@ import { useUpdateTask } from "../../services/tasks/updateTask";
 
 const TaskDetail = () => {
   const [edit, setEdit] = useState<boolean>(false);
-
-
-  // const {id} = useParams<{ id: string }>();
+  const navigate = useNavigate();
   const {data: currentTask, isError, isLoading} = useTaskDetail();
   const deleteTaskMutation = useDeleteTask();
   const updateTaskMutation = useUpdateTask();
 
-  console.log(currentTask);
   const [localTitle, setLocalTitle] = useState<string>('');
   const [localDescription, setLocalDescription] = useState<string>('');
   const [localPriority, setLocalPriority] = useState<Priority>('low' as Priority);
@@ -36,14 +33,18 @@ const TaskDetail = () => {
     }
   }, [currentTask]);
 
+  if (isLoading) {
+    return <div className={s.loading}><h4>Loading task details...</h4></div>;
+  }
 
-  const navigate = useNavigate();
   const onClickBack = () => {
     navigate("/");
   };
 
   const deleteHandler = () => {
-    deleteTaskMutation.mutate(currentTask.id, {
+    if (!currentTask?.id) return; 
+
+    deleteTaskMutation.mutate(currentTask.id , {
       onSuccess: () => {
         navigate("/");
       }
@@ -56,7 +57,7 @@ const TaskDetail = () => {
 
   const saveHandler = (e: React.SubmitEvent<HTMLFormElement>) => {
     e.preventDefault();
-
+    if (!currentTask?.id) return;
     const updatedFields = {
       title: localTitle,
       description: localDescription,
@@ -83,9 +84,6 @@ const TaskDetail = () => {
   };
 
 
-  if (isLoading) {
-    return <div className={s.loading}><h4>Loading task details...</h4></div>;
-  }
 
   return (
     <>

@@ -25,3 +25,9 @@
         width: 24px;
     }
 }
+
+.loading {
+    height: 80vh;
+    width: 100%;    
+    @include flex-hybrid(center, center);  
+}

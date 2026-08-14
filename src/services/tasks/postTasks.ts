@@ -13,8 +13,11 @@ export const useCreateTask = () => {
     return useMutation({
         mutationFn: ({ newTask, signal }: { newTask: Omit<ITask, "id" | "createdAt">, signal?: AbortSignal }) => 
             postTask(newTask, signal),
-        onSuccess: () => {
-            queryClient.invalidateQueries({ queryKey: ["tasks"] });
+        onSuccess: (data) => {
+            queryClient.setQueryData(["tasks"] , (oldData: ITask[]) => [...oldData, data]);
         },
+        onError: () => {
+            console.log('User creation failed');
+        }
     });
 };
