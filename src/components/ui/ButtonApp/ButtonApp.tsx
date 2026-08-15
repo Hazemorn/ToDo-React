@@ -4,12 +4,14 @@ import s from "./ButtonApp.module.scss";
 interface ButtonProps {
   title: string;
   max_width?: string;
+  disable?: boolean
   onClick?: () => void;
 }
 
 const ButtonApp = React.memo(({
   title,
   max_width = "280px",
+  disable,
   onClick,
 }: ButtonProps) => {
   return (
@@ -19,6 +21,7 @@ const ButtonApp = React.memo(({
       style={{
         maxWidth: max_width,
       }}
+      disabled={disable}
     >
       {title}
     </button>

@@ -11,8 +11,10 @@
         gap: 20px;
     }
     &__description {
-        resize: none;
-        width: 100%;
+        textarea {
+            resize: none;
+            width: 100%;
+        }
     }   
 }
 
